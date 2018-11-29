@@ -1,11 +1,8 @@
 #include <cc/compiler-gcc.h>
 
-#include "../drivers/screen.h"
+#include "descriptor_tables.h"
 
-static void __unused foo(void)
-{
-	print("foo\n");
-}
+#include "../drivers/screen.h"
 
 void kernel_main(void)
 {
@@ -15,5 +12,12 @@ void kernel_main(void)
 		print("ccOS kernel\n");
 
 	print("This text forces the kernel to scroll\n");
-	print("And with this text, the kernel scrolls again\n");
+	print("And with this text\n");
+
+	init_descriptor_tables();
+
+	asm volatile ("int $0x03");
+	asm volatile ("int $0x04");
+
+	print("kernel\n");
 }

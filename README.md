@@ -10,6 +10,7 @@ A toy operating system
          * [Interact with the Hardware](#Interact_with_the_Hardware)
          * [Framebuffer](#Framebuffer)
          * [Segmentation](#Segmentation)
+         * [Interrupt](#Interrupt)
 * [References](#References)
 
 # OS development
@@ -183,3 +184,43 @@ a null descriptor and can never be used to access memory. At least two segmnet d
 ```
 
 #### [Notes regarding C](https://wiki.osdev.org/Segmentation#Notes_Regarding_C)
+
+### Interrupt
+```
+An interrupt is a signal from a device, such a device, to the CPU, telling it to immediately stop
+whatever it is doing and do somethings else. For example, the keyboard sends an interrupt when a
+key is pressed. To know how to call on the kernel when a specific interrupt arise, the CPU has a
+table called IDT, which is a vector table setup by the OS, and stored in memory. There are 256
+interrupt vectors on x86 CPUs, numbered from 0 to 255 which act as entry points into the kernel.
+The numbers of interrupt vectors or entry points supported by a CPU is differs base on the CPU
+architecture.
+```
+For more information: [Wiki OS dev](https://wiki.osdev.org/Interrupts)
+
+```
+     31                                          16 15 14 13 12  11  10 9 8  7 6 5 4       0
+      -------------------------------------------------------------------------------------
+     |                                            |   |     |   |   |       |     |        |
+     |           offset hight                     | P | DPL | 0 | D | 1 1 0 |0 0 0|reserved|  4
+     |                                            |   |     |   |   |       |     |        |
+      -------------------------------------------------------------------------------------
+
+     31                                         16 15                                      0
+      -------------------------------------------------------------------------------------
+     |                                            |                                        |
+     |           Segment Selector                 |         offset low                     |  0
+     |                                            |                                        |
+      -------------------------------------------------------------------------------------
+
+                                      8-byte interrupt descriptor
+
+```
+|  Name | Descriptor |
+|-------|------------|
+| offset high | The 16 highest bits of the 32 bit address in the segment |
+| offset low  | The 16 lowest bits of the 32 bits address in the segment |
+| p           | If the handler is present in memory or not (1 = present, 0 = not present) |
+| DPL         | Descriptor Privilige Level, the privilege level the handler can be called from (0, 1, 2, 3) |
+| D           | Size of gate, (1 = 32 bits, 0 = 16 bits) |
+| segment selector | The offset in the GDT |
+| r                | Reserved |

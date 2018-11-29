@@ -25,7 +25,7 @@ jmp $
 [bits 16]
 load_kernel:
 	mov bx, KERNEL_OFFSET ; Read from disk and store in KERNEL_OFFSET
-	mov dh, 15 ; Read the first 15 sectors
+	mov dh, 50            ; Read the first 15 sectors
 	mov dl, [BOOT_DRIVE]
 	call disk_load
 

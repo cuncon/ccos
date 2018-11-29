@@ -11,10 +11,10 @@ kernel.bin:
 
 clean:
 	$(RM) -rf ccos-image
+	cd bootloader && $(MAKE) $@
 	cd kernel && $(MAKE) $@
 	cd drivers && $(MAKE) $@
 	cd lib && $(MAKE) $@
-	cd bootloader && $(MAKE) $@
 
 run: ccos-image
 	qemu-system-i386 -fda $<
