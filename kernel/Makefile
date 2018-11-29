@@ -1,11 +1,22 @@
 kernel = kernel.bin
 
+CFLAGS := -Wall -std=gnu99 -I../include
+
 all: $(kernel)
 
-$(kernel): kernel.o
-	ld -melf_i386 -o $@ -Ttext 0x1000 kernel.o --oformat binary
+$(kernel): kernel.o kernel_entry.o drivers lib
+	ld -melf_i386 -o $@ -Ttext 0x1000 *.o ../drivers/*.o ../lib/*.o --oformat binary
 
-kernel.o: kernel.S
+drivers:
+	cd ../$@ && $(MAKE)
+
+lib:
+	cd ../$@ && $(MAKE)
+
+kernel.o: kernel.c
+	$(CC) $(CFLAGS) -m32 -ffreestanding -c $< -o $@
+
+kernel_entry.o: kernel_entry.S
 	nasm $< -f elf -o $@
 
 clean:

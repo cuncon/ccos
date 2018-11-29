@@ -12,6 +12,8 @@ kernel.bin:
 clean:
 	$(RM) -rf ccos-image
 	cd kernel && $(MAKE) $@
+	cd drivers && $(MAKE) $@
+	cd lib && $(MAKE) $@
 	cd bootloader && $(MAKE) $@
 
 run: ccos-image
