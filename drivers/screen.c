@@ -2,9 +2,8 @@
 #include <cc/stddef.h>
 #include <cc/types.h>
 #include <cc/compiler-gcc.h>
-
-#include "io.h"
-#include "screen.h"
+#include <asm-generic/io.h>
+#include <video/vga.h>
 
 static char * const frame_buffer = (char * const)FRAME_BUFFER_ADDRESS;
 
@@ -53,7 +52,7 @@ static uint16_t handle_scrolling(uint16_t cursor)
 	return (cursor - (MAX_COLS << 1));
 }
 
-void print_char(char c, int col, int row, char attr)
+static void print_char(char c, int col, int row, char attr)
 {
 	int offset;
 
@@ -76,7 +75,7 @@ void print_char(char c, int col, int row, char attr)
 	set_cursor(handle_scrolling(offset + 2));
 }
 
-void print_at(const char *msg, int col, int row)
+static void print_at(const char *msg, int col, int row)
 {
 	if (col >= 0 && row >=0)
 		set_cursor(get_offset(col, row));
@@ -85,7 +84,7 @@ void print_at(const char *msg, int col, int row)
 		print_char(msg[i], col, row, WHITE_ON_BLACK);
 }
 
-void print(const char *msg)
+void kprint(const char *msg)
 {
 	print_at(msg, -1, -1);
 }

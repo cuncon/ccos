@@ -1,5 +1,5 @@
-#ifndef _COMMON_H
-#define _COMMON_H
+#ifndef __CC_COMPILER_GCC_H
+#define __CC_COMPILER_GCC_H
 
 #ifdef __GNUC__
 #define GCC_VERSION (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
@@ -54,4 +54,4 @@
 #define unlikely(x)  (x)
 #endif
 
-#endif /* _COMMON_H */
+#endif /* __CC_COMPILER_GCC_H */

@@ -4,9 +4,9 @@
 #include <cc/types.h>
 #include <cc/compiler-gcc.h>
 
-#define MAX_IDT_ENTRY 256
+#define IDT_ENTRY_MAX 256
 
-/* Interrupt gate */
+/* Interrupt descriptor entry */
 struct idt_entry {
 	uint16_t base_lo;  /* The lower 16 bits of the handler address */
 	uint16_t segment;  /* Kernel segment selector */
@@ -24,39 +24,14 @@ struct idt_pointer {
 
 typedef struct idt_pointer idt_pointer_t;
 
+/* PICs */
+#define MASTER_PIC_IO 0x20 /* IO base address for master PIC */
+#define MASTER_PIC_COMMAND MASTER_PIC_IO
+#define MASTER_PIC_DATA    (MASTER_PIC_IO + 1)
+#define SLAVE_PIC_IO 0xA0 /* IO base address for slave PIC */
+#define SLAVE_PIC_COMMAND SLAVE_PIC_IO
+#define SLAVE_PIC_DATA    (SLAVE_PIC_IO + 1)
+
 extern void init_descriptor_tables(void);
 
-extern void isr0(void);
-extern void isr1(void);
-extern void isr2(void);
-extern void isr3(void);
-extern void isr4(void);
-extern void isr5(void);
-extern void isr6(void);
-extern void isr7(void);
-extern void isr8(void);
-extern void isr9(void);
-extern void isr10(void);
-extern void isr11(void);
-extern void isr12(void);
-extern void isr13(void);
-extern void isr14(void);
-extern void isr15(void);
-extern void isr16(void);
-extern void isr17(void);
-extern void isr18(void);
-extern void isr19(void);
-extern void isr20(void);
-extern void isr21(void);
-extern void isr22(void);
-extern void isr23(void);
-extern void isr24(void);
-extern void isr25(void);
-extern void isr26(void);
-extern void isr27(void);
-extern void isr28(void);
-extern void isr29(void);
-extern void isr30(void);
-extern void isr31(void);
-
-#endif
+#endif /* _DESCRIPTOR_TABLES_H */

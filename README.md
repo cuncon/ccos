@@ -197,6 +197,7 @@ architecture.
 ```
 For more information: [Wiki OS dev](https://wiki.osdev.org/Interrupts)
 
+#### Interrupt Descriptor Table
 ```
      31                                          16 15 14 13 12  11  10 9 8  7 6 5 4       0
       -------------------------------------------------------------------------------------
@@ -215,8 +216,8 @@ For more information: [Wiki OS dev](https://wiki.osdev.org/Interrupts)
                                       8-byte interrupt descriptor
 
 ```
-|  Name | Descriptor |
-|-------|------------|
+|  Name   | Descriptor |
+|:-------:|------------|
 | offset high | The 16 highest bits of the 32 bit address in the segment |
 | offset low  | The 16 lowest bits of the 32 bits address in the segment |
 | p           | If the handler is present in memory or not (1 = present, 0 = not present) |
@@ -224,3 +225,23 @@ For more information: [Wiki OS dev](https://wiki.osdev.org/Interrupts)
 | D           | Size of gate, (1 = 32 bits, 0 = 16 bits) |
 | segment selector | The offset in the GDT |
 | r                | Reserved |
+
+#### Programmable Interrupt Controller (PIC)
+| IRQ | Description |
+|:---:|-------------|
+| 0 |Programmable Interrupt Timer Interrupt
+| 1 |Keyboard Interrupt
+| 2 |Cascade (used internally by the two PICs. never raised)
+| 3 |COM2 (if enabled)
+| 4 |COM1 (if enabled)
+| 5 |LPT2 (if enabled)
+| 6 |Floppy Disk
+| 7 |LPT1 / Unreliable "spurious" interrupt (usually)
+| 8 |CMOS real-time clock (if enabled)
+| 9 |Free for peripherals / legacy SCSI / NIC
+| 10 |Free for peripherals / SCSI / NIC
+| 11 |Free for peripherals / SCSI / NIC
+| 12 |PS2 Mouse
+| 13 |FPU / Coprocessor / Inter-processor
+| 14 |Primary ATA Hard Disk
+| 15 |Secondary ATA Hard Disk

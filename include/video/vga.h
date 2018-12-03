@@ -1,5 +1,5 @@
-#ifndef _SCREEN_H
-#define _SCREEN_H
+#ifndef _VIDEO_VGA_H
+#define _VIDEO_VGA_H
 
 #define WHITE_ON_BLACK 0x0f
 #define BLANK_CHAR (0x20 | WHITE_ON_BLACK << 8)
@@ -14,9 +14,7 @@
 #define CRTC_INDEX_REG 0x3D4
 #define CRTC_DATA_REG  0x3D5
 
-extern void print_char(char, int, int, char);
-extern void print_at(const char *, int, int);
-extern void print(const char *);
+extern void kprint(const char *);
 extern void clear_screen(void);
 
-#endif
+#endif /* _VIDEO_VGA_H */

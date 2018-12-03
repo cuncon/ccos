@@ -2,9 +2,9 @@
 
 void *memcpy(void *to, const void *from, size_t n)
 {
-	char *temp = to;
+	char *tmp = to;
 
-	while (n-- && (*temp++ = *(const char *)from++));
+	while (n-- && (*tmp++ = *(const char *)from++));
 
 	return to;
 }
@@ -17,33 +17,48 @@ void *memset(void *src, int c, size_t n)
 	return src;
 }
 
-char *strcpy(char *dest, const char *src)
+size_t strlen(const char *s)
 {
-	int i;
+	const char *sc;
 
-	for (i = 0; src[i] != '\0'; i++)
-		dest[i] = src[i];
-	dest[i] = '\0';
+	for (sc = s; *sc != '\0'; ++sc)
+		/* do nothing */;
 
-	return dest;
+	return sc - s;
 }
 
-char *itoa(char *buf, int c)
+char *strcpy(char *dest, const char *src)
 {
-	char s[12];
-	int i;
+	char *tmp = dest;
 
-	buf[0] = (c >> 31) ? '-' : '+';
+	while ((*dest++ = *src++) != '\0');
 
-	unsigned int abs = (unsigned int)((c << 1) >> 1);
-	for (i = 0; abs > 0; abs /= 10, i++)
-		s[i] = (abs % 10) + '0';
-	s[i] = '\0';
+	return tmp;
+}
 
-	if (buf[0] == '-')
-		strcpy(buf + 1, s);
-	else
-		strcpy(buf, s);
+char *itoa(char *ascii, int c)
+{
+	int i = 0;
+	int sign = c < 0 ? -c : c;
 
-	return buf;
+	do {
+		ascii[i++] = (c % 10) + '0';
+	} while ((c /= 10) > 0);
+
+	if (sign < 0)
+		ascii[i++] = '-';
+	ascii[i] = '\0';
+
+	return reverse(ascii);
+}
+
+char *reverse(char *s)
+{
+	char *tmp = s;
+	char *tail = s + strlen(s) - 1;
+
+	while ((*s++ = *tail--) && (tail >= tmp));
+	*s = '\0';
+
+	return tmp;
 }
