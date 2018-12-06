@@ -8,7 +8,7 @@ A toy operating system
     * [Bootloader](#Bootloader)
     * [Kernel](#Kernel)
          * [Interact with the Hardware](#Interact_with_the_Hardware)
-         * [Framebuffer](#Framebuffer)
+         * [Text Mode](#Text Mode)
          * [Segmentation](#Segmentation)
          * [Interrupt](#Interrupt)
 * [References](#References)
@@ -79,9 +79,35 @@ out dx, al         ; Update dor of the device
 
 For more in/out: [Inline Assembly](https://wiki.osdev.org/Inline_Assembly/Examples)
 
-### Framebuffer
-#### Text mode
-#### Graphic mode
+### Text mode
+```
+                      0xB8000                            0xB8FA0
+                      ------------------------------------------
+                     |               VIDEO MEMORY               |
+                      ------------------------------------------
+                                         /\
+                                        /  \
+                                 [ ASCII ] [ ATTR ]
+                                  8 bits    8 bits
+
+```
+
+```
+                      0xB8000                            0xB8FA0
+                      ------------------------------------------
+                     |               VIDEO MEMORY               |
+                      ------------------------------------------
+                                 ^                  ^
+                                /                    \
+                               /                      \
+                              /                        \
+      0xXXXXXXXX   0xXXXXXXXX + 0xFA0              0xXXXXXXXX   0xXXXXXXXX + 0xFA0
+      -------------------------------              -------------------------------
+     |         VT1 text buffer       |            |         VT2 text buffer       |
+      -------------------------------              -------------------------------
+
+                                    Virtual Terminal
+```
 
 ### Segmentation
 ```
