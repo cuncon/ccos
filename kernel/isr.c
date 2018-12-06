@@ -58,16 +58,10 @@ void isr_handler(register_t reg)
 
 void irq_handler(register_t reg)
 {
-	char buf[10];
-
 	/* Acknowledge the interrupt */
 	if (reg.int_no > 40) /* slave */
 		outb(SLAVE_PIC_COMMAND, 0x20);
 	outb(MASTER_PIC_COMMAND, 0x20);
-
-	kprint("irq #");
-	kprint(itoa(buf, reg.int_no));
-	kprint("\n");
 
 	if (int_handlers[reg.int_no] != NULL)
 		int_handlers[reg.int_no](reg);
