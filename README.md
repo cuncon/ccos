@@ -27,13 +27,36 @@ ccOS is a hobbylist 32-bit kernel and operating system for the x86 platform.
 ```
 
 ## BIOS
-```
-When a PC is turned on, the computer will start a small program that adheres to Basic Input Output
-System standard. This program is usually stored on a read only memory chip on the motherboard of
-the PC. Modern operating systems do not use the BIOS functions, they use drivers that interact
+
+<div>
+<p style="text-align: justify">
+When a PC is turned on, the computer will start a small program that adheres to Basic Input Output System standard. This program is usually stored on a read only memory chip on the motherboard of the PC. Modern operating systems do not use the BIOS functions, they use drivers that interact
 directly with the hardware, bypassing the BIOS. Today, BIOS mainly runs some early diagnostics
-(power-on-self-test) and then transfers control to the bootloader.
-```
+Power on sefl test or POST and then transfers control to the bootloader.
+</p>
+
+<ul>
+<li>POST</li>
+<p style="text-align: justify">
+BIOS tests to insure there is good amount of power being supplied, the device installed (such as
+keyboard, mouse, USB, serial ports, etc), and insure the memory is good by testing for memory
+curroption.
+</p>
+<li>Find a bootable device</li>
+<p style="text-align: justify">
+After POST process, BIOS then needs to find an OS. Based on the boot order that you setup in the
+BIOS setup, the BIOS will execute the Interrupt (INT) 0x19 to attempt to find a bootable device.
+If no bootable device is found (INT 0x19 returns), the BIOS goes on to the next device listed in
+the boot order. If there is no more devices, it will print an error similar to "No operating
+System found" and halt the system.
+</p>
+<li>Load a bootloader</li>
+<p style="text-align: justify">
+If a bootable device is found, then BIOS loads the bootsector to address 0x7C00, and INT 0x19
+will jump to it, thereby giving control to the bootloader.
+</p>
+</ul>
+</div>
 
 ## Bootloader
 ### A machine code boot sector
