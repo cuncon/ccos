@@ -1,7 +1,12 @@
-# ccOS
-A toy operating system
+<h1 style="text-align: center">ccOS - OS4every1</h1>
+
+## About
+
+ccOS is a hobbylist 32-bit kernel and operating system for the x86 platform.
 
 # Table of Contents
+
+* [About](#About)
 * [OS development](#OS-development)
     * [Booting process](#Booting-process)
     * [BIOS](#BIOS)
